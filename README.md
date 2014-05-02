@@ -1,4 +1,4 @@
-Sieve of eratosthenes
+Eratosthenes
 ============
 
 The sieve of eratosthenes implemented in Postscript programming language
