@@ -1,5 +1,14 @@
 %!PS
 
+%
+% This is a naive implementation of the sieve of eratosthenes
+% in Postscript language. This sieve should be a genuine eratosthenes sieve,
+% because there is no primality tests involved.
+% The maximum size of array is dependent on interpreters.
+% The maximum range is up to 60000 in Ghostscript.
+%
+
+
 (Enter the top of the range of primes:\n) print flush
 (%stdin) (r) file /stdin exch def
 1024 string /inbuf exch def
@@ -14,33 +23,30 @@
 {nstr cvi} stopped {(illegal ) print nstr == flush  quit} if
 /N exch def
 
-/all_primes
+/sieve
 {
 /n exch def
 /m n 1 sub def
 
+% initializing the array
 /pool
 [0 1 m {} for] def
-
+% the first prime
 /p 2 def
 
-/q p def
-
+% the main loop
 {
 
 2 p mul  p m {pool exch 0 put} for
 
-%pool ==
 p 1 add /p exch def
 {
     pool p get 0 ne {exit}{1 p add /p exch def} ifelse
     p m gt {exit} if
 } loop
 
-%(p = ) print p == flush
-
-p p mul m gt {%m == flush
- exit} if
+% break
+p p mul m gt { exit} if
 
 } loop
 
@@ -51,7 +57,7 @@ p p mul m gt {%m == flush
 }
 def
 
-N all_primes
+N sieve
 
 (The primes are:\n) print flush
 final == flush
