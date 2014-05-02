@@ -1,0 +1,60 @@
+%!PS
+
+(Enter the top of the range of primes:\n) print flush
+(%stdin) (r) file /stdin exch def
+1024 string /inbuf exch def
+{
+
+    stdin inbuf readline {dup (you have entered ) print == flush exit}
+    {(Enter the upper range of primes) == flush} ifelse
+
+} loop
+
+/nstr exch def
+{nstr cvi} stopped {(illegal ) print nstr == flush  quit} if
+/N exch def
+
+/all_primes
+{
+/n exch def
+/m n 1 sub def
+
+/pool
+[0 1 m {} for] def
+
+/p 2 def
+
+/q p def
+
+{
+
+2 p mul  p m {pool exch 0 put} for
+
+%pool ==
+p 1 add /p exch def
+{
+    pool p get 0 ne {exit}{1 p add /p exch def} ifelse
+    p m gt {exit} if
+} loop
+
+%(p = ) print p == flush
+
+p p mul m gt {%m == flush
+ exit} if
+
+} loop
+
+
+/final [2 1 m { dup pool exch get 0 ne { pool exch get  } {pop} ifelse } for] def
+
+
+}
+def
+
+N all_primes
+
+(The primes are:) == flush
+final == flush
+
+
+quit
